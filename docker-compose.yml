@@ -1,0 +1,14 @@
+version: '2'
+services:
+  salt-master:
+    image: salt-master
+    ports:
+      - 0.0.0.0:4505:4505
+      - 0.0.0.0:4506:4506
+    restart: always
+    volumes:
+      - /srv/salt:/srv/salt
+      - /srv/salt/pki:/etc/salt/pki
+      # Use bellow for customized configuration, you can also use only single
+      # file as a volume
+      # - /etc/salt/master.d:/etc/salt/master.d
