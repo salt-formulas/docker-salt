@@ -8,7 +8,7 @@ RUN apt-get -qq update && \
     wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add - && \
     echo "deb http://repo.saltstack.com/apt/debian/8/amd64/${VERSION} jessie main" && \
     apt-get update && apt-get install -y salt-master reclass && \
-    mkdir /etc/reclass /var/run/salt && \
+    mkdir -p /etc/reclass /var/run/salt /etc/salt/pki/master/minions && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN useradd --system salt && \

@@ -19,7 +19,7 @@ First create directories on your host and set permissions:
 
 .. code-block:: bash
 
-    mkdir -p /srv/salt/reclass /srv/salt/env /srv/salt/pki
+    mkdir -p /srv/salt/reclass /srv/salt/env /srv/salt/pki/master/minions
     chown 999:999 /srv/salt/pki
 
 Run salt-master manually:
