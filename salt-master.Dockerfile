@@ -6,7 +6,7 @@ ENV VERSION $version
 RUN apt-get -qq update && \
     apt-get install -y wget gnupg2 && \
     wget -O - https://repo.saltstack.com/apt/debian/9/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add - && \
-    echo "deb http://repo.saltstack.com/apt/debian/9/amd64/${VERSION} jessie main" && \
+    echo "deb http://repo.saltstack.com/apt/debian/9/amd64/${VERSION} stretch main" >/etc/apt/sources.list.d/saltstack.list && \
     apt-get update && apt-get install -y salt-master reclass && \
     mkdir -p /etc/reclass /var/run/salt /etc/salt/pki/master/minions && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -24,8 +24,8 @@ RUN wget https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini
 
 # Setup salt-formulas repository
 RUN echo "deb http://ppa.launchpad.net/salt-formulas/ppa/ubuntu xenial main" >/etc/apt/sources.list.d/salt-formulas.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 39847281B4B4F5E69A9012612B06BC3AFC7315C0
-RUN apt-get -qq update && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 39847281B4B4F5E69A9012612B06BC3AFC7315C0 && \
+    apt-get -qq update && \
     apt-get install -y salt-formula-* && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
