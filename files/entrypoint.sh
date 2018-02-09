@@ -30,7 +30,7 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
     fi
 
     if [[ $ENABLE_SALT_API -eq 1 ]]; then
-        if [ -n $SALT_API_PASSWORD ]; then
+        if [ -z $SALT_API_PASSWORD ]; then
             SALT_API_PASSWORD=$(pwgen -1 8)
             log_info "No SALT_API_PASSWORD provided, using auto-generated ${SALT_API_PASSWORD}"
         fi
