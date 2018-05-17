@@ -10,7 +10,7 @@ Build
 
 .. code-block:: bash
 
-    docker build -t salt-master -f salt-master.Dockerfile --build-args version=latest .
+    docker build -t salt-master -f salt-master.Dockerfile --build-arg version=latest .
 
 Run
 ===
