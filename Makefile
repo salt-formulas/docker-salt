@@ -3,7 +3,7 @@ ORGANIZATION ?= $(shell id -un)
 SUDO ?= "sudo"
 
 build:
-	$(SUDO) docker build --no-cache -t $(ORGANIZATION)/salt-master:$(VERSION) -f salt-master.Dockerfile .
+	$(SUDO) docker build -t $(ORGANIZATION)/salt-master:$(VERSION) -f salt-master.Dockerfile .
 	$(SUDO) docker tag $(ORGANIZATION)/salt-master:$(VERSION) $(ORGANIZATION)/salt-master:latest
 
 push:
