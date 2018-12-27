@@ -7,11 +7,12 @@ ENV VERSION $version
 
 ENV DEBIAN_FRONTEND noninteractive
 
+# Install salt
 RUN apt-get -qq update && \
     apt-get install -y wget gnupg2 && \
     wget -O - https://repo.saltstack.com/apt/debian/9/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add - && \
     echo "deb http://repo.saltstack.com/apt/debian/9/amd64/${VERSION} stretch main" >/etc/apt/sources.list.d/saltstack.list && \
-    apt-get update && apt-get install -y salt-master reclass salt-api pwgen git make myrepos && \
+    apt-get update && apt-get install -y salt-master salt-api pwgen git make myrepos && \
     mkdir -p /etc/reclass /var/run/salt /etc/salt/pki/master/minions && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -19,10 +20,16 @@ RUN useradd --system salt && \
     chown -R salt:salt /etc/salt /var/cache/salt /var/log/salt /var/run/salt && \
     echo "user: salt" >> /etc/salt/master
 
+# Install reclass
+RUN apt-get -qq update && \
+    apt-get install --no-install-recommends -y python-pip python-ddt python-pyparsing && \
+    pip install -e git+https://github.com/salt-formulas/reclass.git#egg=reclass && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Use tini as subreaper in Docker container to adopt zombie processes
 ENV TINI_VERSION 0.18.0
 ENV TINI_SHA eadb9d6e2dc960655481d78a92d2c8bc021861045987ccd3e27c7eae5af0cf33
 
-# Use tini as subreaper in Docker container to adopt zombie processes
 RUN wget https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static-amd64 -O /bin/tini && chmod +x /bin/tini \
   && echo "$TINI_SHA  /bin/tini" | sha256sum -c -
 
