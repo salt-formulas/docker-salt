@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM ubuntu:16.04
 
 MAINTAINER Filip Pytloun <filip@pytloun.cz>
 
